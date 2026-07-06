@@ -11,8 +11,10 @@ namespace TarantulaTiltSensitivity.Patches
     /// Manual tilt is driven by the <c>customAxis1</c> input, which
     /// <c>PilotPlayerState.PlayerThrottleAxis1Controls</c> integrates linearly (≈110°/s) — so a brief
     /// tap near level flight overshoots badly (e.g. +5° → −2°). This patch measures how far that
-    /// method moved <c>customAxis1</c> this frame and, while the wing is inside the fine-control zone,
-    /// scales the movement down by <see cref="SensitivityCurve"/>. Everything downstream (auto-tilt,
+    /// method moved <c>customAxis1</c> this frame and, while the commanded (desired) wing angle is
+    /// inside the fine-control zone, scales the movement down by <see cref="SensitivityCurve"/>. The
+    /// desired angle — not the slower-moving actual angle — is used so fine control is available as
+    /// soon as you steer the input near level. Everything downstream (auto-tilt,
     /// yaw/pitch vectoring, networking) is untouched.
     /// </para>
     ///
@@ -104,14 +106,21 @@ namespace TarantulaTiltSensitivity.Patches
                 return; // player didn't move the tilt axis this frame
             }
 
+            // Gate on the *desired* (commanded) wing angle, not the actual angle. The actual angle
+            // lags well behind the input, so gating on it would suppress fine control whenever the
+            // rotors hadn't physically reached the zone yet. customAxis1 (0..1) maps linearly onto
+            // the rotor's [lower, upper] limits, so it is the commanded angle the player is steering.
+            var limits = tilt.GetAngleLimits();
+            float desiredAngle = Mathf.Lerp(limits.Item1, limits.Item2, __state);
+
             float divisor = SensitivityCurve.ComputeDivisor(
-                tilt.GetWingAngle(),
+                desiredAngle,
                 ModConfig.ZoneHalfWidthDegrees.Value,
                 ModConfig.CenterSensitivityDivisor.Value);
 
             if (divisor <= 1f)
             {
-                return; // outside the zone → default sensitivity
+                return; // commanded angle outside the zone → default sensitivity
             }
 
             inputs.customAxis1 = Mathf.Clamp01(__state + delta / divisor);

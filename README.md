@@ -15,9 +15,11 @@ brief tap near 0° overshoots hard (e.g. **+5° → −2°**), making precise le
 
 ## The fix
 
-While the wing is near 0°, the mod scales down the per-frame tilt input, giving finer control
-exactly where you need it. The scaling is a smooth curve: strongest at 0° and tapering to normal by
-the edge of the zone, so there's no abrupt change.
+While the **commanded (desired)** tilt is near 0°, the mod scales down the per-frame tilt input,
+giving finer control exactly where you need it. It keys off the desired angle — the fast-moving
+value you steer — rather than the slower actual rotor angle, so fine control kicks in as soon as you
+aim near level, not only once the rotors have physically arrived. The scaling is a smooth curve:
+strongest at 0° and tapering to normal by the edge of the zone, so there's no abrupt change.
 
 - Default: **4× slower** at 0°, back to normal by **±10°**.
 - Only affects the **Tarantula** (any aircraft with a tilt-wing controller; optionally name-filtered).
