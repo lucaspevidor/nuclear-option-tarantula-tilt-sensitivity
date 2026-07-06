@@ -21,7 +21,7 @@ value you steer — rather than the slower actual rotor angle, so fine control k
 aim near level, not only once the rotors have physically arrived. The scaling is a smooth curve:
 strongest at 0° and tapering to normal by the edge of the zone, so there's no abrupt change.
 
-- Default: **4× slower** at 0°, back to normal by **±10°**.
+- Default: **8× slower** at 0°, back to normal by **±10°**.
 - Only affects the **Tarantula** (any aircraft with a tilt-wing controller; optionally name-filtered).
 - Only affects **manual** tilt — with auto-tilt on, the game drives the rotors itself and the mod
   stays out of the way.
@@ -37,7 +37,7 @@ See [`../docs/`](../docs) for the BepInEx/Harmony background and the full invest
 |---------------|---------|--------|
 | `General / Enabled` | `true` | Toggle the whole mod at runtime. |
 | `Sensitivity / ZoneHalfWidthDegrees` | `10` | Fine control applies within ± this many degrees of 0. |
-| `Sensitivity / CenterSensitivityDivisor` | `4` | How much slower tilt moves at exactly 0° (tapers to 1× at the edge). |
+| `Sensitivity / CenterSensitivityDivisor` | `8` | How much slower tilt moves at exactly 0° (tapers to 1× at the edge). |
 | `Targeting / RestrictToUnitName` | `Tarantula` | Only affect aircraft whose name contains this (case-insensitive). Empty = any tilt-wing. |
 
 ## Building

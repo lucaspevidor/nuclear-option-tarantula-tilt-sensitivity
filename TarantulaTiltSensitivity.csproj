@@ -6,7 +6,7 @@
     <Product>TarantulaTiltSensitivity</Product>
     <Description>Adds a fine-control sensitivity curve near 0 degrees to the Tarantula's manual rotor tilt.</Description>
     <Authors>Lucas Pevidor</Authors>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <LangVersion>latest</LangVersion>
     <RootNamespace>TarantulaTiltSensitivity</RootNamespace>
     <AssemblyTitle>TarantulaTiltSensitivity</AssemblyTitle>
