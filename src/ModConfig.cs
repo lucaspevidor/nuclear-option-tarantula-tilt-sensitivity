@@ -52,9 +52,9 @@ namespace TarantulaTiltSensitivity
             CenterSensitivityDivisor = config.Bind(
                 "Sensitivity",
                 "CenterSensitivityDivisor",
-                4f,
+                8f,
                 new ConfigDescription(
-                    "How much slower tilt moves at exactly 0 degrees (e.g. 4 = 4x slower). The effect "
+                    "How much slower tilt moves at exactly 0 degrees (e.g. 8 = 8x slower). The effect "
                     + "tapers smoothly to 1x at the edge of the zone. 1 = no change.",
                     new AcceptableValueRange<float>(1f, 20f)));
 
